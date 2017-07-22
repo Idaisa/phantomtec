@@ -51,6 +51,10 @@ namespace _9o_Vision.RecallTracker
             {
                 _recalls.Add(new Recall(Game.ClockTime, Game.ClockTime + 8, sender as Obj_AI_Hero));
             }
+            else if (args.Name == "SuperRecall" && !sender.IsAlly)
+            {
+                _recalls.Add(new Recall(Game.ClockTime, Game.ClockTime + 4, sender as Obj_AI_Hero));
+            }
             else if (string.IsNullOrWhiteSpace(args.Name))
             {
                 _recalls.RemoveAll(it => it?.Caster?.NetworkId == sender?.NetworkId);
