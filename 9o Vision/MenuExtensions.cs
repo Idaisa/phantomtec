@@ -19,6 +19,13 @@ namespace _9o_Vision
             return newMenu;
         }
 
+        public static MenuSeperator Add(this Menu menu, string name)
+        {
+            var component = new MenuSeperator(menu.InternalName + "." + name, name);
+            menu.Add(component);
+            return component;
+        }
+
         public static MenuBool Add(this Menu menu, string name, bool defaultValue, Action<bool> valueChanged)
         {
             var component = new MenuBool(menu.InternalName + "." + name, name, defaultValue);

@@ -50,11 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalculatedWard.cs" />
+    <Compile Include="GankAlerter\GankAlerter.cs" />
+    <Compile Include="Wards\CalculatedWard.cs" />
+    <Compile Include="IFeature.cs" />
     <Compile Include="MenuExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WardTracker.cs" />
+    <Compile Include="Wards\WardTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
