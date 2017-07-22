@@ -14,8 +14,11 @@
         private readonly Color _greenWard = Color.LawnGreen;
         private readonly Color _minimapUnderlay = Color.FromArgb(175, 0, 0, 0);
         private readonly Color _pinkWard = Color.Magenta;
+        private readonly Color _trap = Color.Red;
         private readonly HashSet<string> _wardNames = new HashSet<string> { "SightWard", "VisionWard", "JammerDevice" };
+        private readonly HashSet<string> _trapNames = new HashSet<string> { "Noxious Trap", "Cupcake Trap", "Jack In The Box" };
 
+        private readonly List<GameObject> _traps = new List<GameObject>();
         private readonly List<Obj_AI_Minion> _wards = new List<Obj_AI_Minion>();
         private readonly HashSet<string> _wardSpells = new HashSet<string> { "TrinketTotemLvl1", "ItemGhostWard", "JammerDevice", "TrinketOrbLvl3" };
 
@@ -29,6 +32,7 @@
 
         private bool _drawTimes = true;
         private bool _drawWards = true;
+        private bool _drawTraps = true;
         private bool _drawWardsMinimap = true;
         private float _lastTick;
 
@@ -38,6 +42,7 @@
             rootMenu.Add(menu);
 
             menu.Add("Draw wards", true, val => _drawWards = val);
+            menu.Add("Draw traps <WIP>", true, val => _drawTraps = val);
             menu.Add("Draw wards on Minimap", true, val => _drawWardsMinimap = val);
             menu.Add("Draw Times (where known)", true, val => _drawTimes = val);
 
@@ -101,9 +106,6 @@
 
         private void OnProcessSpell(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            //if (args.Sender.IsMe)
-            //    Console.WriteLine(args.SpellData.Name);
-
             if (args.Sender.IsAlly || args.Sender.Type != GameObjectType.obj_AI_Hero)
                 return;
 
@@ -119,10 +121,22 @@
         {
             if (_drawWards)
             {
+                _wards.RemoveAll(it => !it.IsValid);
                 foreach (var ward in _wards)
                     Render.Circle(ward.Position, 75, 16, ward.Name == "JammerDevice" ? _pinkWard : _greenWard);
                 foreach (var ward in _calculatedWards)
                     Render.Circle(ward.Position, 75, 16, ward.Color);
+            }
+
+            if (_drawTraps)
+            {
+                _traps.RemoveAll(it => !it.IsValid);
+                foreach (var trap in _traps)
+                {
+                    //if (trap.IsVisible)
+                    //    continue;
+                    Render.Circle(trap.Position, Math.Max(50, trap.BoundingRadius), 16, _trap);
+                }
             }
 
             if (_drawTimes)
@@ -148,12 +162,17 @@
                         _wards.RemoveAt(index--);
         }
 
+
         private void OnGameObjectCreated(GameObject sender)
         {
             if (_wardNames.Contains(sender.Name) && !sender.IsAlly)
             {
                 _wards.Add((Obj_AI_Minion)sender);
                 EliminateDuplicates();
+            }
+            else if (_trapNames.Contains(sender.Name) && !sender.IsAlly)
+            {
+                _traps.Add(sender);
             }
         }
     }

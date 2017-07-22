@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GankAlerter\GankAlerter.cs" />
+    <Compile Include="RecallTracker\Recall.cs" />
+    <Compile Include="RecallTracker\RecallTracker.cs" />
     <Compile Include="Wards\CalculatedWard.cs" />
     <Compile Include="IFeature.cs" />
     <Compile Include="MenuExtensions.cs" />

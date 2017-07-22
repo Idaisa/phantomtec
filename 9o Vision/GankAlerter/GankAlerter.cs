@@ -58,7 +58,8 @@ namespace _9o_Vision.GankAlerter
                 {
                     if (hero.SpellBook.Spells.Any(sp => sp.Name == "SummonerSmite"))
                     {
-                        _heroColor[hero.NetworkId] = Color.FromArgb(150, Color.Magenta);
+                        _heroColor[hero.NetworkId] = Color.FromArgb(150, Color.DarkMagenta);
+                        _heroTextColor[hero.NetworkId] =  Color.Magenta;
                     }
                 }
             }
@@ -126,6 +127,9 @@ namespace _9o_Vision.GankAlerter
 
         private void OnRender()
         {
+            if (!_alertOnAlly && !_alertOnEnemy)
+                return;
+
             var clockTime = Game.ClockTime;
             var player = ObjectManager.GetLocalPlayer();
 

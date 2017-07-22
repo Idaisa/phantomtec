@@ -20,7 +20,7 @@ namespace _9o_Vision
         {
             var rootMenu = new Menu($"{nameof(_9o_Vision)}", "9o Vision", true);
             rootMenu.Attach();
-            var features = new IFeature[] { new WardTracker(), new GankAlerter.GankAlerter() };
+            var features = new IFeature[] { new WardTracker(), new GankAlerter.GankAlerter(), new RecallTracker.RecallTracker(), };
 
             foreach (var feature in features)
             {
