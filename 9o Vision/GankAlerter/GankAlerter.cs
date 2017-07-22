@@ -98,7 +98,7 @@ namespace _9o_Vision.GankAlerter
 
                 foreach (var hero in GameObjects.EnemyHeroes)
                 {
-                    if (hero.IsEnemy && !_alertOnEnemy || hero.IsDead)
+                    if (hero == null || !hero.IsValid || hero.IsEnemy && !_alertOnEnemy || hero.IsDead)
                         continue;
 
                     if (hero.IsVisible)
