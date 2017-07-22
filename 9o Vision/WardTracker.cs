@@ -19,8 +19,8 @@ namespace _9o_Vision
         private readonly Dictionary<string, Func<Obj_AI_Base, int>> _wardSpellToTimeResolveFunc = new Dictionary<string, Func<Obj_AI_Base, int>>
         {
             { "TrinketTotemLvl1", hero => (int)((hero.Level - 1) * 3.5f + 60.5f)},
-            {"ItemGhostWard", hero => 150 },
-            {"JammerDevice", hero => ushort.MaxValue }
+            { "ItemGhostWard", hero => 150 },
+            { "JammerDevice", hero => ushort.MaxValue }
         };
 
         private readonly List<Obj_AI_Minion> _wards = new List<Obj_AI_Minion>();
@@ -30,6 +30,10 @@ namespace _9o_Vision
         private bool _drawWardsMinimap = true;
         private bool _drawTimes = true;
         private float _lastTick = 0f;
+
+        private readonly Color _greenWard = Color.LawnGreen;
+        private readonly Color _pinkWard = Color.Magenta;
+        private readonly Color _minimapUnderlay = Color.FromArgb(175, 0, 0, 0);
 
         public void OnLoad()
         {
@@ -57,7 +61,9 @@ namespace _9o_Vision
                 {
                     if (Render.WorldToMinimap(ward.Position, out Vector2 screenCoord))
                     {
-                        Render.Text(screenCoord.X - 2, screenCoord.Y-2, Color.DarkGreen, "x");
+                        Render.Line(screenCoord.X - 5, screenCoord.Y + 5, screenCoord.X + 5, screenCoord.Y + 5, 10, false, _minimapUnderlay);
+                        Render.Text(screenCoord.X - 2, screenCoord.Y - 2, ward.Name == "JammerDevice" ? _pinkWard :_greenWard, "x");
+                        
                     }
                 }
 
@@ -65,7 +71,8 @@ namespace _9o_Vision
                 {
                     if (Render.WorldToMinimap(ward.Position, out Vector2 screenCoord))
                     {
-                        Render.Text(screenCoord.X - 2, screenCoord.Y-2, ward.Color, "x");
+                        Render.Line(screenCoord.X - 5, screenCoord.Y + 5, screenCoord.X + 5, screenCoord.Y + 5, 10, false, _minimapUnderlay);
+                        Render.Text(screenCoord.X - 2, screenCoord.Y - 2, ward.Color, "x");
                     }
                 }
             }
@@ -101,7 +108,7 @@ namespace _9o_Vision
             if (_wardSpells.Contains(args.SpellData.Name))
             {
                 var time = _wardSpellToTimeResolveFunc[args.SpellData.Name](args.Sender);
-                _calculatedWards.Add(new CalculatedWard(Game.ClockTime + time, args.End, args.SpellData.Name == "JammerDevice" ? Color.Magenta : Color.DarkGreen));
+                _calculatedWards.Add(new CalculatedWard(Game.ClockTime + time, args.End, args.SpellData.Name == "JammerDevice" ? _pinkWard : _greenWard));
                 EliminateDuplicates();
             }
         }
@@ -112,7 +119,7 @@ namespace _9o_Vision
             {
                 foreach (var ward in _wards)
                 {
-                    Render.Circle(ward.Position, 75, 32, ward.Name == "JammerDevice" ? Color.Magenta : Color.DarkGreen);
+                    Render.Circle(ward.Position, 75, 32, ward.Name == "JammerDevice" ? _pinkWard : _greenWard);
                 }
                 foreach (var ward in _calculatedWards)
                 {
@@ -137,8 +144,6 @@ namespace _9o_Vision
                     }
                 }
             }
-
-
         }
 
         private void EliminateDuplicates()
