@@ -57,7 +57,6 @@ namespace _9o_Vision
                 {
                     if (Render.WorldToMinimap(ward.Position, out Vector2 screenCoord))
                     {
-                        Console.WriteLine(screenCoord);
                         Render.Text(screenCoord.X - 2, screenCoord.Y-2, Color.DarkGreen, "x");
                     }
                 }
@@ -66,7 +65,6 @@ namespace _9o_Vision
                 {
                     if (Render.WorldToMinimap(ward.Position, out Vector2 screenCoord))
                     {
-                        Console.WriteLine(screenCoord);
                         Render.Text(screenCoord.X - 2, screenCoord.Y-2, ward.Color, "x");
                     }
                 }
