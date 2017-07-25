@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AntiConfusion\AntiConfusion.cs" />
     <Compile Include="GankAlerter\GankAlerter.cs" />
     <Compile Include="RecallTracker\Recall.cs" />
     <Compile Include="RecallTracker\RecallTracker.cs" />
@@ -63,5 +64,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
