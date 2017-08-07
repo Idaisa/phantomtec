@@ -47,11 +47,11 @@ namespace _9o_Vision.RecallTracker
 
         private void OnTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs args)
         {
-            if (args.Name == "recall" && !sender.IsAlly)
+            if (args.Name.Equals("recall", StringComparison.InvariantCultureIgnoreCase) && !sender.IsAlly)
             {
                 _recalls.Add(new Recall(Game.ClockTime, Game.ClockTime + 8, sender as Obj_AI_Hero));
             }
-            else if (args.Name == "SuperRecall" && !sender.IsAlly)
+            else if (args.Name.Equals("SuperRecall", StringComparison.InvariantCultureIgnoreCase) && !sender.IsAlly)
             {
                 _recalls.Add(new Recall(Game.ClockTime, Game.ClockTime + 4, sender as Obj_AI_Hero));
             }

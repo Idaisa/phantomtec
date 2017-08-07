@@ -31,6 +31,7 @@ namespace _9o_Vision.GankAlerter
         private float _lastJunglerDistance;
         private MenuBool _allyJunglerMenu;
         private int _junglerMenuIndex;
+        private Obj_AI_Hero _me;
 
         public void OnLoad(Menu rootMenu)
         {
@@ -66,6 +67,7 @@ namespace _9o_Vision.GankAlerter
             
             _allyJungler = GameObjects.AllyHeroes.FirstOrDefault(ally => ally.SpellBook.Spells.Any(sp => sp.Name == "SummonerSmite"));
             _allyJunglerMenu = new MenuBool($"{nameof(_9o_Vision)}.gankAlerter.jungler", $"Ally Jungler: {_allyJungler?.ChampionName ?? "None"}", false);
+            _me = ObjectManager.GetLocalPlayer();
 
             menu.Add("(Click below to correct jungler)");
             menu.Add(_allyJunglerMenu);
@@ -127,7 +129,7 @@ namespace _9o_Vision.GankAlerter
 
         private void OnRender()
         {
-            if (!_alertOnAlly && !_alertOnEnemy)
+            if (!_alertOnAlly && !_alertOnEnemy || _me.IsDead)
                 return;
 
             var clockTime = Game.ClockTime;

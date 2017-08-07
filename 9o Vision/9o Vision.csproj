@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AntiConfusion\AntiConfusion.cs" />
     <Compile Include="GankAlerter\GankAlerter.cs" />
+    <Compile Include="Ranges\Ranges.cs" />
     <Compile Include="RecallTracker\Recall.cs" />
     <Compile Include="RecallTracker\RecallTracker.cs" />
     <Compile Include="Wards\CalculatedWard.cs" />
