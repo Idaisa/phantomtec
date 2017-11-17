@@ -50,6 +50,10 @@ namespace _9o_Vision.RecallTracker
             if (args.Name.Equals("recall", StringComparison.InvariantCultureIgnoreCase) && !sender.IsAlly)
             {
                 _recalls.Add(new Recall(Game.ClockTime, Game.ClockTime + 8, sender as Obj_AI_Hero));
+                if (Game.ClockTime<0.5)
+                {
+                    _recalls.Add(new Recall(Game.ClockTime, Game.ClockTime + 10, sender as Obj_AI_Hero));
+                }
             }
             else if (args.Name.Equals("SuperRecall", StringComparison.InvariantCultureIgnoreCase) && !sender.IsAlly)
             {
